@@ -28,3 +28,15 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             **validated_data)
 
         return user
+
+
+class CurrentUserSerializer(serializers.ModelSerializer):
+    company = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'role', 'company']
+        read_only_fields = ['id', 'username', 'email', 'role', 'company']
+
+    def get_company(self, obj):
+        return obj.company.name if obj.company else None
