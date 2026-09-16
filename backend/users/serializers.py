@@ -1,3 +1,4 @@
+from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
 from rest_framework import serializers
 
@@ -6,12 +7,15 @@ from users.models import User
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
-    company_name = serializers.CharField(max_length=100)
+    company_name = serializers.CharField(max_length=100, write_only=True)
+    password = serializers.CharField(
+        write_only=True,
+        validators=[validate_password],
+    )
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password', 'company_name']
-        extra_kwargs = {'password': {'write_only': True}}
 
     @transaction.atomic
     def create(self, validated_data):
