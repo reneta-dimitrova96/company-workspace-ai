@@ -21,6 +21,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from users.views import RegisterUserView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
 
@@ -33,5 +35,11 @@ urlpatterns = [
         "api/auth/refresh/",
         TokenRefreshView.as_view(),
         name="token_refresh",
+    ),
+
+    path(
+        "api/auth/register/",
+        RegisterUserView.as_view(),
+        name="register",
     ),
 ]
