@@ -22,7 +22,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from users.views import RegisterUserView, CurrentUserView
-from tickets.views import TicketListCreateView
+from tickets.views import TicketListCreateView, TicketDetailView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -54,5 +54,11 @@ urlpatterns = [
         "api/tickets/",
         TicketListCreateView.as_view(),
         name="ticket-list-create",
+    ),
+
+    path(
+        "api/tickets/<int:pk>/",
+        TicketDetailView.as_view(),
+        name="ticket-detail",
     ),
 ]
