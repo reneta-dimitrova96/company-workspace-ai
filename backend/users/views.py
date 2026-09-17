@@ -25,4 +25,4 @@ class CurrentUserView(APIView):
     def get(self, request):
         current_user = request.user
         serializer = self.serializer_class(current_user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
