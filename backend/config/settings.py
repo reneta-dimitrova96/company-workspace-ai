@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'companies',
     'users',
     'tickets',
+    'ideas',
 ]
 
 MIDDLEWARE = [
