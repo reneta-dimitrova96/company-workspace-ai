@@ -3,8 +3,8 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticated
 
 from tickets.models import Ticket, TicketComment
-from tickets.permissions import TicketDetailPermission
 from tickets.serializers import TicketSerializer, TicketCommentSerializer
+from users.permissions import IsOwnerOrAdminOrReadOnly
 
 
 class TicketListCreateView(ListCreateAPIView):
@@ -21,7 +21,7 @@ class TicketListCreateView(ListCreateAPIView):
 
 class TicketDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = TicketSerializer
-    permission_classes = [IsAuthenticated, TicketDetailPermission]
+    permission_classes = [IsAuthenticated, IsOwnerOrAdminOrReadOnly]
 
     def get_queryset(self):
         company_tickets = Ticket.objects.filter(company=self.request.user.company)

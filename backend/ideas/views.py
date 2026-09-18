@@ -1,21 +1,19 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from ideas.mixins import CompanyIdeaQuerysetMixin
 from ideas.models import Idea, IdeaVote
 from ideas.serializers import IdeaSerializer
+from users.permissions import IsOwnerOrAdminOrReadOnly
 
 
-class IdeaListCreateView(ListCreateAPIView):
+class IdeaListCreateView(CompanyIdeaQuerysetMixin, ListCreateAPIView):
     serializer_class = IdeaSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        user_ideas = Idea.objects.filter(company=self.request.user.company)
-        return user_ideas
 
     def perform_create(self, serializer):
         serializer.save(company=self.request.user.company, created_by=self.request.user)
@@ -65,3 +63,8 @@ class IdeaVoteView(APIView):
         return Response(
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
+class IdeaDetailView(CompanyIdeaQuerysetMixin, RetrieveUpdateDestroyAPIView):
+    serializer_class = IdeaSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOrAdminOrReadOnly]
