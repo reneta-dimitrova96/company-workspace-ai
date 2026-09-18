@@ -21,6 +21,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from ideas.views import IdeaListCreateView, IdeaVoteView
 from users.views import RegisterUserView, CurrentUserView
 from tickets.views import TicketListCreateView, TicketDetailView, TicketCommentListCreateView
 
@@ -66,5 +67,17 @@ urlpatterns = [
         "api/tickets/<int:ticket_id>/comments/",
         TicketCommentListCreateView.as_view(),
         name="ticket-comment-list-create",
+    ),
+
+    path(
+        "api/ideas/",
+        IdeaListCreateView.as_view(),
+        name="idea-list-create",
+    ),
+
+    path(
+        "api/ideas/<int:idea_id>/vote/",
+        IdeaVoteView.as_view(),
+        name="idea-vote",
     ),
 ]
