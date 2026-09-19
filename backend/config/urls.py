@@ -21,6 +21,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from companies.views import CompanyUsersAPIView
 from dashboard.views import DashboardView
 from ideas.views import IdeaListCreateView, IdeaVoteView, IdeaDetailView
 from users.views import RegisterUserView, CurrentUserView
@@ -88,5 +89,14 @@ urlpatterns = [
         name="idea-detail",
     ),
 
-    path("api/dashboard/", DashboardView.as_view(), name="dashboard")
+    path(
+        "api/dashboard/",
+        DashboardView.as_view(),
+        name="dashboard"),
+
+    path(
+        "api/company/users/",
+        CompanyUsersAPIView.as_view(),
+        name="company-users",
+    ),
 ]
