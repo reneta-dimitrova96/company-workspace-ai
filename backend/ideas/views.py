@@ -16,7 +16,7 @@ class IdeaListCreateView(CompanyIdeaQuerysetMixin, ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(company=self.request.user.company, created_by=self.request.user)
+        serializer.save(company=self.request.user.company, created_by=self.request.user, status=Idea.Statuses.OPEN)
 
 
 class IdeaVoteView(APIView):
