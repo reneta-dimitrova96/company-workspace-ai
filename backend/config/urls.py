@@ -21,6 +21,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from dashboard.views import DashboardView
 from ideas.views import IdeaListCreateView, IdeaVoteView, IdeaDetailView
 from users.views import RegisterUserView, CurrentUserView
 from tickets.views import TicketListCreateView, TicketDetailView, TicketCommentListCreateView
@@ -86,4 +87,6 @@ urlpatterns = [
         IdeaDetailView.as_view(),
         name="idea-detail",
     ),
+
+    path("api/dashboard/", DashboardView.as_view(), name="dashboard")
 ]
