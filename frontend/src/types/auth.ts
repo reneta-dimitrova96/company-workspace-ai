@@ -17,3 +17,7 @@ export interface CurrentUser {
   role: UserRole;
   company: number | null;
 }
+
+export interface RefreshResponse {
+  access: string;
+}

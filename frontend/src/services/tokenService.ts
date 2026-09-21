@@ -1,4 +1,4 @@
-import type {LoginResponse} from "../types/auth";
+import type {LoginResponse, RefreshResponse} from "../types/auth";
 
 const ACCESS_TOKEN_KEY = "access_token";
 const REFRESH_TOKEN_KEY = "refresh_token";
@@ -20,3 +20,7 @@ export const clearTokens = () => {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);
 };
+
+export const updateAccessToken = (token: RefreshResponse) => {
+  localStorage.setItem(ACCESS_TOKEN_KEY, token.access);
+}
