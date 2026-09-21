@@ -3,8 +3,8 @@ import type { SyntheticEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import { login } from "../services/authService";
-import { saveTokens } from "../services/tokenService";
+import { login } from "../../services/authService.ts";
+import { saveTokens } from "../../services/tokenService.ts";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
