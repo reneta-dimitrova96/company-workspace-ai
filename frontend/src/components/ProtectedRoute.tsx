@@ -7,6 +7,7 @@ import {
   clearTokens,
   getAccessToken,
 } from "../services/tokenService";
+import type {CurrentUser} from "../types/auth.ts";
 
 type AuthStatus =
   | "checking"
@@ -15,6 +16,7 @@ type AuthStatus =
   | "error";
 
 const ProtectedRoute = () => {
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const [authStatus, setAuthStatus] =
     useState<AuthStatus>("checking");
 
@@ -29,7 +31,9 @@ const ProtectedRoute = () => {
     setAuthStatus("checking");
 
     try {
-      await getCurrentUser();
+      const user = await getCurrentUser();
+
+      setCurrentUser(user);
       setAuthStatus("authenticated");
     } catch (error) {
       if (
@@ -68,7 +72,7 @@ const ProtectedRoute = () => {
     );
   }
 
-  return <Outlet />;
+  return <Outlet context={{ currentUser }} />;
 };
 
 export default ProtectedRoute;

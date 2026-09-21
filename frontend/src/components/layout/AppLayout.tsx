@@ -1,12 +1,20 @@
 import { Box } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import type { CurrentUser } from "../../types/auth";
 
 const SIDEBAR_WIDTH = 240;
 
+interface AuthOutletContext {
+  currentUser: CurrentUser;
+}
+
 const AppLayout = () => {
+  const { currentUser } =
+    useOutletContext<AuthOutletContext>();
+
   return (
     <Box sx={{ minHeight: "100vh" }}>
       <Sidebar />
@@ -19,7 +27,7 @@ const AppLayout = () => {
           flexDirection: "column",
         }}
       >
-        <Header />
+        <Header currentUser={currentUser} />
 
         <Box
           component="main"
